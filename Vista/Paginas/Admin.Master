@@ -1,0 +1,103 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="Vista.Paginas.Admin" %>
+
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="asp" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="head1" runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Css -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../css/select_2.min.css" rel="stylesheet" />
+
+    <!-- Select2 y Mensajes Bootbox -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/select2.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/bootbox.js"></script>
+    <script src="../js/bootstrap-modal.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".js-example-placeholder-single").select2({
+                placeholder: "Buscar",
+                allowClear: true
+            });
+        });
+        function advertencia(msje) {
+            bootbox.alert("<div class='alert mensaje-warning'><b>" + msje + "</b></div");
+        }
+        function mensaje(msje) {
+            bootbox.alert("<div class='alert mensaje-success'><b>" + msje + "</b></div");
+        }
+    </script>
+
+    <!-- Deshabilitar opción Atrás Navegador -->
+    <script language="javascript" type="text/javascript">
+        javascript: window.history.forward(1); 
+    </script> 
+
+    <!-- Icono -->
+    <link rel="shortcut icon" href="../img/favicon.ico">
+</head>
+    
+<body>
+<form id="Form1" runat="server">
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+		
+        <!-- Content -->
+		<div class="content">
+			<ul id="jetmenu" class="jetmenu blue">
+	
+            <!-- Container -->			
+            <div id="container" class="backgmaster" style ="background: url(img/bg.jpg) no-repeat center center fixed; background-color: rgba(255,255,255,0.5); -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; -webkit-box-shadow: 11px 14px 94px -4px rgba(107,107,107,1);-moz-box-shadow: 11px 14px 94px -4px rgba(107,107,107,1); box-shadow: 11px 14px 94px -4px rgba(107,107,107,1); padding-top:15px; border-radius: 7px;">
+
+                <div style="background-color: rgba(255,255,255,0.6); width:100%; border-radius: 7px; ">
+                    <table style="width: 400px; height: 91px;" id="Table2" runat="server">
+                        <tr align="left">
+                            <td style="width: 30px"></td>
+                            <td align="left" style="width: 90px;"><asp:Image ID="Image2" runat="server" ImageUrl="~/img/icono_user.png" Height="80px" /></td>
+                            <td  style="width: 300px" align="left">
+                                <br />
+                                <span><asp:HyperLink runat="server" ID="hlActualizar" NavigateUrl="~/Paginas/ActualizarDatos.aspx"><asp:Label ID="lbUsuario" runat="server" Font-Bold="False" Font-Names="Century Gothic" Font-Size="17px"></asp:Label></asp:HyperLink></span>
+                                <br />
+                                <asp:HyperLink ID="hlSalir" runat="server" NavigateUrl="~/Paginas/Salir.aspx" style="font-size: 17px; color: #289537">Cerrar Sesión</asp:HyperLink>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+
+                <!-- Menu -->
+                <asp:Menu runat="server" ID="menuPrincipal" Orientation="Horizontal" StaticMenuStyle-CssClass="nav nav-tabs" IncludeStyleBlock="false" RenderingMode="List">
+                    <Items>
+                        <asp:MenuItem Text="Guía SILCAU" NavigateUrl="~/Paginas/Bienvenido.aspx"></asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+	
+                <!-- Contenido -->
+                <br />
+                <div class="bloque">
+                    <asp:ContentPlaceHolder runat="server" ID="MainContent"></asp:ContentPlaceHolder>
+                </div>
+                <br />
+
+                <!-- Footer -->
+                <center>
+                    <div style="background-color: rgba(255,255,255,0.6); width:100%; border-radius: 7px; ">
+                        <div class="bloque" style="font-family:Monospace; font-size: 14px; padding-top:7px; padding-bottom:7px;">
+                            Sistema de Información del Licenciamiento y Control Ambiental Urbanístico SILCAU<br />
+                            Corporación Autónoma Regional de las Cuencas de los Ríos Negro y Nare CORNARE <br />
+                        </div>
+                    </div>
+                </center>
+
+            </div>
+        </ul>
+    </div>
+
+</form>
+</body>
+</html>

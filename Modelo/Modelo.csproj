@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E939CEC4-7813-4A1A-8F23-CF2EC7201239}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Modelo</RootNamespace>
+    <AssemblyName>Modelo</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Delegador\AutorizacionDelegador.cs" />
+    <Compile Include="Delegador\SueloDelegador.cs" />
+    <Compile Include="Delegador\ZonificacionDelegador.cs" />
+    <Compile Include="Delegador\RestriccionesDelegador.cs" />
+    <Compile Include="Delegador\DetalleReporteDelegador.cs" />
+    <Compile Include="Delegador\MunicipioDelegador.cs" />
+    <Compile Include="Delegador\ReporteDelegador.cs" />
+    <Compile Include="Delegador\RolDelegador.cs" />
+    <Compile Include="Delegador\UsuarioDelegador.cs" />
+    <Compile Include="Delegador\VeredaDelegador.cs" />
+    <Compile Include="Fachada\AutorizacionFachada.cs" />
+    <Compile Include="Fachada\RestriccionesFachada.cs" />
+    <Compile Include="Fachada\ZonificacionFachada.cs" />
+    <Compile Include="Fachada\SueloFachada.cs" />
+    <Compile Include="Fachada\DetalleReporteFachada.cs" />
+    <Compile Include="Fachada\MunicipioFachada.cs" />
+    <Compile Include="Fachada\ReporteFachada.cs" />
+    <Compile Include="Fachada\RolFachada.cs" />
+    <Compile Include="Fachada\UsuarioFachada.cs" />
+    <Compile Include="Fachada\VeredaFachada.cs" />
+    <Compile Include="Negocio\AutorizacionNegocio.cs" />
+    <Compile Include="Negocio\ZonificacionNegocio.cs" />
+    <Compile Include="Negocio\SueloNegocio.cs" />
+    <Compile Include="Negocio\RestriccionesNegocio.cs" />
+    <Compile Include="Negocio\DetalleReporteNegocio.cs" />
+    <Compile Include="Negocio\MunicipioNegocio.cs" />
+    <Compile Include="Negocio\ReporteNegocio.cs" />
+    <Compile Include="Negocio\RolNegocio.cs" />
+    <Compile Include="Negocio\UsuarioNegocio.cs" />
+    <Compile Include="Negocio\VeredaNegocio.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAO\DAO.csproj">
+      <Project>{6BA243B7-D264-453E-9B9A-B5D30037EE68}</Project>
+      <Name>DAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entidad\Entidad.csproj">
+      <Project>{86DC5B35-FA10-4FE1-A7F5-43A2532E6E70}</Project>
+      <Name>Entidad</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
