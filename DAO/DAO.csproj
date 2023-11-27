@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6BA243B7-D264-453E-9B9A-B5D30037EE68}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAO</RootNamespace>
+    <AssemblyName>DAO</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Oracle.DataAccess, Version=2.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAOFactory\DAOFactory.cs" />
+    <Compile Include="DAOFactory\SQLServerDAOFactory.cs" />
+    <Compile Include="Implementacion\SQLServer\AutorizacionSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\SueloSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\ZonificacionSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\RestriccionesSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\DetalleReporteSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\MunicipioSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\ReporteSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\RolSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\UsuarioSQLServerDAO.cs" />
+    <Compile Include="Implementacion\SQLServer\VeredaSQLServerDAO.cs" />
+    <Compile Include="Interface\IZonificacionDAO.cs" />
+    <Compile Include="Interface\ISueloDAO.cs" />
+    <Compile Include="Interface\IRestriccionesDAO.cs" />
+    <Compile Include="Interface\IAutorizacionDAO.cs" />
+    <Compile Include="Interface\IDetalleReporteDAO.cs" />
+    <Compile Include="Interface\IMunicipioDAO.cs" />
+    <Compile Include="Interface\IReporteDAO.cs" />
+    <Compile Include="Interface\IRolDAO.cs" />
+    <Compile Include="Interface\IUsuarioDAO.cs" />
+    <Compile Include="Interface\IVeredaDAO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidad\Entidad.csproj">
+      <Project>{86DC5B35-FA10-4FE1-A7F5-43A2532E6E70}</Project>
+      <Name>Entidad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transversal\Transversal.csproj">
+      <Project>{9899767B-6934-48FB-A3D1-0C258799F0E8}</Project>
+      <Name>Transversal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
