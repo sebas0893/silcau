@@ -11,7 +11,7 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="../css/select_2.min.css" rel="stylesheet" />
-
+    <link href="../css/pagination.css" rel="stylesheet" type="text/css" />
     <!-- Select2 y Mensajes Bootbox -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/select2.min.js"></script>

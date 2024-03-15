@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\bootstrap.css" />
+    <Content Include="css\pagination.css" />
     <Content Include="css\select_2.min.css" />
     <Content Include="css\style.css" />
     <Content Include="img\bg_body.jpg" />
