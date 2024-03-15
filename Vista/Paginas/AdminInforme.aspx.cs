@@ -72,8 +72,10 @@ namespace Vista.Paginas
                            {
                                codigo = r.Codigo,
                                municipio = r.NombreMunicipio,
+                               usuario = r.Usuario.Nombre,
                                mes = Constantes.Meses[r.Mes] + " " + r.Anio,
-                               enviado = Constantes.Boolean[r.Enviado]
+                               enviado = Constantes.Boolean[r.Enviado],
+                               tieneResgistros = r.TieneRegistros.HasValue ? r.TieneRegistros.Value ? "SI" : "NO" : ""
                            };
             gvMeses.DataSource = reportes.ToList();
             gvMeses.DataBind();
@@ -117,25 +119,28 @@ namespace Vista.Paginas
         // Opciones
         protected void gvMeses_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int index = Convert.ToInt32(e.CommandArgument);
-            ReporteDTO reporteDTO = new ReporteDTO();
-            reporteDTO.Codigo = long.Parse(gvMeses.DataKeys[index].Value.ToString());
-            hfCodigo.Value = reporteDTO.Codigo.ToString();
-            string enviado = gvMeses.Rows[index].Cells[2].Text;
-
-            // Devolver
-            if (e.CommandName.Equals("Devolver"))
+            if(!e.CommandName.Equals("Page"))
             {
-                if (enviado.Equals("Si"))
-                {
-                    mpeDevolver.Enabled = true;
-                    mpeDevolver.Show();
-                }
-                else ClientScript.RegisterStartupScript(this.GetType(), "advertencia", "advertencia('Sólo es posible devolver reportes enviados');", true);
-            }
+                int index = Convert.ToInt32(e.CommandArgument);
+                ReporteDTO reporteDTO = new ReporteDTO();
+                reporteDTO.Codigo = long.Parse(gvMeses.DataKeys[index].Value.ToString());
+                hfCodigo.Value = reporteDTO.Codigo.ToString();
+                string enviado = gvMeses.Rows[index].Cells[3].Text;
 
-            // Descargar
-            else if (e.CommandName.Equals("Descargar")) generarReporte(reporteDTO);
+                // Devolver
+                if(e.CommandName.Equals("Devolver"))
+                {
+                    if(enviado.Equals("Si"))
+                    {
+                        mpeDevolver.Enabled = true;
+                        mpeDevolver.Show();
+                    }
+                    else ClientScript.RegisterStartupScript(this.GetType(), "advertencia", "advertencia('Sólo es posible devolver reportes enviados');", true);
+                }
+
+                // Descargar
+                else if(e.CommandName.Equals("Descargar")) generarReporte(reporteDTO);
+            }
         }
 
         // Confirmar Devolver

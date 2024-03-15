@@ -45,8 +45,10 @@
                         <asp:GridView ID="gvMeses" runat="server" class="table table-bordered table-striped" AllowPaging="True" PageSize="10" AutoGenerateColumns="False" DataKeyNames="codigo" onpageindexchanging="gvMeses_PageIndexChanging" onrowcommand="gvMeses_RowCommand">
                             <Columns>
                                 <asp:BoundField DataField="municipio" HeaderText="Municipio" />
+                                <asp:BoundField DataField="usuario" HeaderText="Usuario" />
                                 <asp:BoundField DataField="mes" HeaderText="Mes" />
                                 <asp:BoundField DataField="enviado" HeaderText="Enviado" />
+                                <asp:BoundField DataField="tieneResgistros" HeaderText="Lincencias/Autorizaciones otorgadas" />
                                 <asp:ButtonField ButtonType="Image" CommandName="Devolver" HeaderText="Devolver" ImageUrl="~/img/icono_cambiar.png" />
                                 <asp:ButtonField ButtonType="Image" CommandName="Descargar" HeaderText="Descargar" ImageUrl="~/img/icon_excel.png" />
                             </Columns>
@@ -54,6 +56,7 @@
                                 NO HAY INFORMES PARA EL MES SELECCIONADO
                             </EmptyDataTemplate>
                             <HeaderStyle CssClass="success headerClass" />
+                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Center" />
                         </asp:GridView>
                         <asp:HiddenField ID="hfCodigo" runat="server" Value="" />
                     </div>

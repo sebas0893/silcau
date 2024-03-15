@@ -25,7 +25,7 @@ namespace DAO.Implementacion.SQLServer
             long codigo = 0;
             try
             {
-                String sentenciaSQL = "INSERT INTO LIC_REPORTE(NM_MUNICIPIO, NM_ANIO, NM_MES, NM_ENVIADO, NM_USUARIO) VALUES(@parametroMunicipio, @parametroAnio, @parametroMes, 0, @parametroUsuario)" +
+                String sentenciaSQL = "INSERT INTO LIC_REPORTE(NM_MUNICIPIO, NM_ANIO, NM_MES, NM_ENVIADO, NM_USUARIO, BI_TIENE_REGISTROS) VALUES(@parametroMunicipio, @parametroAnio, @parametroMes, 0, @parametroUsuario, @parametroTieneRegistros)" +
                                       "SELECT SCOPE_IDENTITY();";
                 using (SqlCommand comandoSQL = new SqlCommand(sentenciaSQL, transaccion.Connection, transaccion))
                 {
@@ -34,6 +34,7 @@ namespace DAO.Implementacion.SQLServer
                     comandoSQL.Parameters.Add("@parametroAnio", SqlDbType.Int).Value = reporteDTO.Anio;
                     comandoSQL.Parameters.Add("@parametroMes", SqlDbType.Int).Value = reporteDTO.Mes;
                     comandoSQL.Parameters.Add("@parametroUsuario", SqlDbType.BigInt).Value = reporteDTO.Usuario.Codigo;
+                    comandoSQL.Parameters.Add("@parametroTieneRegistros", SqlDbType.Bit).Value = Utilidades.BoolNull(reporteDTO.TieneRegistros);
                     codigo = long.Parse(comandoSQL.ExecuteScalar().ToString());
                 }
             }
@@ -104,11 +105,11 @@ namespace DAO.Implementacion.SQLServer
             List<ReporteDTO> listaReporte = new List<ReporteDTO>();
             try
             {
-                String sentenciaSQL = "SELECT R.NM_CODIGO, R.NM_ANIO, R.NM_MES, R.NM_ENVIADO, M.NM_CODIGO, M.NV_NOMBRE, R.NM_USUARIO, ISNULL(U.NV_EMAIL, '') " +
-                                      "FROM LIC_REPORTE R " +
-                                      "JOIN LIC_MUNICIPIO M ON M.NM_CODIGO = R.NM_MUNICIPIO " +
-                                      "LEFT JOIN LIC_USUARIO U ON M.NM_CODIGO = U.NM_MUNICIPIO " +
-                                      "WHERE R.NM_CODIGO > 0";
+                String sentenciaSQL = @"SELECT R.NM_CODIGO, R.NM_ANIO, R.NM_MES, R.NM_ENVIADO, M.NM_CODIGO, M.NV_NOMBRE, R.NM_USUARIO, ISNULL(US.NV_EMAIL, ''), R.BI_TIENE_REGISTROS 
+FROM LIC_REPORTE R 
+INNER JOIN LIC_MUNICIPIO M ON M.NM_CODIGO = R.NM_MUNICIPIO 
+LEFT JOIN LIC_USUARIO US ON R.NM_USUARIO = US.NM_CODIGO 
+WHERE R.NM_CODIGO > 0";
                 using (SqlCommand comandoSQL = new SqlCommand(sentenciaSQL, transaccion.Connection, transaccion))
                 {
                     if (reporteDTO != null)
@@ -151,9 +152,10 @@ namespace DAO.Implementacion.SQLServer
                             municipioDTOTmp.Nombre = cursorDatos.GetString(5);
                             reporteDTOTmp.Municipio = municipioDTOTmp;
                             usuarioDTOTmp = new UsuarioDTO();
-                            usuarioDTOTmp.Codigo = (long)cursorDatos.GetDecimal(6);
+                            usuarioDTOTmp.Codigo = Utilidades.GetLong(cursorDatos, "NM_USUARIO");
                             usuarioDTOTmp.Email = cursorDatos.GetString(7);
                             reporteDTOTmp.Usuario = usuarioDTOTmp;
+                            reporteDTOTmp.TieneRegistros = Utilidades.GetBoolNull(cursorDatos, "BI_TIENE_REGISTROS");
                             listaReporte.Add(reporteDTOTmp);
                         }
                     }
@@ -172,10 +174,11 @@ namespace DAO.Implementacion.SQLServer
             List<ReporteDTO> listaReporte = new List<ReporteDTO>();
             try
             {
-                String sentenciaSQL = "SELECT R.NM_CODIGO, R.NM_ANIO, R.NM_MES, R.NM_ENVIADO, M.NV_NOMBRE " +
-                                      "FROM LIC_REPORTE R " +
-                                      "INNER JOIN LIC_MUNICIPIO M ON M.NM_CODIGO = R.NM_MUNICIPIO " +
-                                      "WHERE R.NM_CODIGO > 0";
+                String sentenciaSQL = @"SELECT R.NM_CODIGO, R.NM_ANIO, R.NM_MES, R.NM_ENVIADO, M.NV_NOMBRE , U.NV_NOMBRE'U.NV_NOMBRE', R.BI_TIENE_REGISTROS
+FROM LIC_REPORTE R 
+INNER JOIN LIC_MUNICIPIO M ON M.NM_CODIGO = R.NM_MUNICIPIO 
+LEFT JOIN LIC_USUARIO U ON R.NM_USUARIO = U.NM_CODIGO
+WHERE R.NM_CODIGO > 0";
                 using (SqlCommand comandoSQL = new SqlCommand(sentenciaSQL, transaccion.Connection, transaccion))
                 {
                     // Consultar por Municipio
@@ -209,6 +212,8 @@ namespace DAO.Implementacion.SQLServer
                             reporteDTOTmp.Mes = (int)cursorDatos.GetDecimal(2);
                             reporteDTOTmp.Enviado = (int)cursorDatos.GetDecimal(3);
                             reporteDTOTmp.NombreMunicipio = cursorDatos.GetString(4);
+                            reporteDTOTmp.Usuario.Nombre = Utilidades.GetString(cursorDatos, "U.NV_NOMBRE");
+                            reporteDTOTmp.TieneRegistros = Utilidades.GetBoolNull(cursorDatos, "BI_TIENE_REGISTROS");
                             listaReporte.Add(reporteDTOTmp);
                         }
                     }

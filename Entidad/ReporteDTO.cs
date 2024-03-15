@@ -7,6 +7,10 @@ namespace Entidad
 {
     public class ReporteDTO
     {
+        public ReporteDTO()
+        {
+            usuario = new UsuarioDTO();
+        }
 
         private long codigo;
 
@@ -55,6 +59,8 @@ namespace Entidad
             get { return usuario; }
             set { usuario = value; }
         }
+
+        public bool? TieneRegistros { get; set; }
 
         // Reporte
 

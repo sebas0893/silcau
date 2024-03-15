@@ -65,7 +65,8 @@ namespace Vista.Paginas
                             codigo = r.Codigo,
                             municipio = r.Municipio.Nombre,
                             mes = Constantes.Meses[r.Mes] + " " + r.Anio,
-                            enviado = Constantes.Boolean[r.Enviado]
+                            enviado = Constantes.Boolean[r.Enviado],
+                            tieneResgistros = r.TieneRegistros.HasValue ? r.TieneRegistros.Value ? "SI" : "NO" : ""
                         };
             gvMeses.DataSource = meses.ToList();
             gvMeses.DataBind();
@@ -93,6 +94,7 @@ namespace Vista.Paginas
                 reporteDTO.Municipio = municipioDTO;
                 reporteDTO.Mes = int.Parse(ddlMes.SelectedValue);
                 reporteDTO.Anio = int.Parse(tbAnio.Text);
+                reporteDTO.TieneRegistros = ddlOtorgadas.SelectedValue.Equals("NO") ? false : true;
                 reporteDTO.Codigo = reporteDelegador.crear(reporteDTO);
                 Session["codigoReporte"] = reporteDTO.Codigo.ToString();
                 Server.Transfer("AdminInformeMensual.aspx");
@@ -106,31 +108,34 @@ namespace Vista.Paginas
         // Opciones
         protected void gvMeses_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int index = Convert.ToInt32(e.CommandArgument);
-            ReporteDTO reporteDTO = new ReporteDTO();
-            reporteDTO.Codigo = long.Parse(gvMeses.DataKeys[index].Value.ToString());
-            Session["codigoReporte"] = reporteDTO.Codigo.ToString();
-            string enviado = gvMeses.Rows[index].Cells[2].Text;
-
-            // Editar
-            if (e.CommandName.Equals("Editar"))
+            if(!e.CommandName.Equals("Page"))
             {
-                if (enviado.Equals("No")) Server.Transfer("AdminInformeMensual.aspx");
-                else ClientScript.RegisterStartupScript(this.GetType(), "advertencia", "advertencia('El informe ya fue enviado. No se puede modificar');", true);
-            }
+                int index = Convert.ToInt32(e.CommandArgument);
+                ReporteDTO reporteDTO = new ReporteDTO();
+                reporteDTO.Codigo = long.Parse(gvMeses.DataKeys[index].Value.ToString());
+                Session["codigoReporte"] = reporteDTO.Codigo.ToString();
+                string enviado = gvMeses.Rows[index].Cells[2].Text;
 
-            // Descargar
-            else if (e.CommandName.Equals("Descargar")) generarReporte(reporteDTO);
-
-            // Eliminar
-            else if (e.CommandName.Equals("Eliminar"))
-            {
-                if (enviado.Equals("No"))
+                // Editar
+                if(e.CommandName.Equals("Editar"))
                 {
-                    mpeEliminar.Enabled = true;
-                    mpeEliminar.Show();
+                    if(enviado.Equals("No")) Server.Transfer("AdminInformeMensual.aspx");
+                    else ClientScript.RegisterStartupScript(this.GetType(), "advertencia", "advertencia('El informe ya fue enviado. No se puede modificar');", true);
                 }
-                else ClientScript.RegisterStartupScript(this.GetType(), "advertencia", "advertencia('El informe ya fue enviado. No se puede eliminar');", true);
+
+                // Descargar
+                else if(e.CommandName.Equals("Descargar")) generarReporte(reporteDTO);
+
+                // Eliminar
+                else if(e.CommandName.Equals("Eliminar"))
+                {
+                    if(enviado.Equals("No"))
+                    {
+                        mpeEliminar.Enabled = true;
+                        mpeEliminar.Show();
+                    }
+                    else ClientScript.RegisterStartupScript(this.GetType(), "advertencia", "advertencia('El informe ya fue enviado. No se puede eliminar');", true);
+                }
             }
         }
 
